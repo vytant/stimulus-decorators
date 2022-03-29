@@ -12,6 +12,7 @@ Stimulus Decorators is a TypeScript library that extends the [Stimulus](https://
 There are several decorators:
 
 - [`@Target`](#target_decorator)
+- [`@Targets`](#targets_decorator)
 - [`@TypedController`](#typed_controller_decorator)
 
 ### <a name="target_decorator"></a> `@Target` decorator
@@ -49,9 +50,47 @@ export default class extends Controller {
 }
 ```
 
+### <a name="targets_decorator"></a> `@Targets` decorator
+
+To get an array of all matching targets in scope, use the `@Targets` decorator.
+
+```ts
+// slider_controller.ts
+import { Controller } from '@hotwired/stimulus';
+import { Targets, TypedController } from '@vytant/stimulus-decorators';
+
+@TypedController
+export default class extends Controller {
+  @Targets slideTargets!: HTMLElement[];
+
+  connect() {
+    this.slideTargets.forEach((element, index) => {
+      /* … */
+    });
+  }
+}
+```
+
+Equivalent to:
+
+```js
+// slider_controller.js
+import { Controller } from '@hotwired/stimulus';
+
+export default class extends Controller {
+  static targets = ['slide'];
+
+  connect() {
+    this.slideTargets.forEach((element, index) => {
+      /* … */
+    });
+  }
+}
+```
+
 ### <a name="typed_controller_decorator"></a> `@TypedController` decorator
 
-It is required to use the `@TypedController` decorator on every Stimulus controller where you use `@Target` decorator.
+It is required to use the `@TypedController` decorator on every Stimulus controller where you use `@Target`, or `@Targets` decorators.
 
 ```ts
 // controller.ts
