@@ -2,9 +2,25 @@
   "name": "@vytant/stimulus-decorators",
   "version": "0.0.0",
   "description": "TypeScript decorators for the Stimulus framework",
-  "main": "index.js",
   "repository": "git@github.com:vytant/stimulus-decorators.git",
   "author": "Vytautas Antanavičius",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "type": "module",
+  "source": "src/index.ts",
+  "exports": {
+    "require": "./dist/index.cjs",
+    "default": "./dist/index.modern.js"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.module.js",
+  "unpkg": "dist/index.umd.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "microbundle",
+    "dev": "microbundle watch"
+  },
+  "devDependencies": {
+    "microbundle": "^0.14.2"
+  }
 }
