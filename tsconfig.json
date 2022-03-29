@@ -7,18 +7,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ],
-    "typeRoots": [
-      "./node_modules/@types",
-      "./@types"
-    ]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "typeRoots": ["./node_modules/@types", "./@types"]
   },
-  "exclude": [
-    "dist"
-  ]
+  "exclude": ["dist"]
 }
