@@ -1,0 +1,10 @@
+{
+  "name": "@vytant/stimulus-decorators",
+  "version": "0.0.0",
+  "description": "TypeScript decorators for the Stimulus framework",
+  "main": "index.js",
+  "repository": "git@github.com:vytant/stimulus-decorators.git",
+  "author": "Vytautas Antanavičius",
+  "license": "MIT",
+  "private": false
+}
