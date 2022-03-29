@@ -1,2 +1,2 @@
-const message = 'Hello, World!';
-console.log(message);
+export * from './decorators/typed-controller';
+export * from './decorators/target';
