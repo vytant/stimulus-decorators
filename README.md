@@ -101,9 +101,10 @@ import { Value, TypedController } from '@vytant/stimulus-decorators';
 @TypedController
 export default class extends Controller {
   @Value(String) urlValue: string;
+  @Value(String) methodValue: string = 'GET';
 
   connect() {
-    fetch(this.urlValue).then(/* … */);
+    fetch(this.urlValue, { method: this.methodValue }).then(/* … */);
   }
 }
 ```
@@ -117,11 +118,34 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
   static values = {
     url: String,
+    method: { type: String, default: 'GET' },
   };
 
   connect() {
-    fetch(this.urlValue).then(/* … */);
+    fetch(this.urlValue, { method: this.methodValue }).then(/* … */);
   }
+}
+```
+
+#### If you'd like to set the `type` of each value from its type definition, you must use [reflect-metadata](https://github.com/rbuckton/reflect-metadata).
+
+1. Set `"emitDecoratorMetadata": true` in your `tsconfig.json`.
+2. Import `reflect-metadata` **before** importing `@vytant/stimulus-decorators` (importing `reflect-metadata` is needed just once).
+
+```ts
+// loader_controller.ts
+import 'reflect-metadata;
+import { Controller } from '@hotwired/stimulus'
+import { Value, TypedController } from '@vytant/stimulus-decorators';
+
+@TypedController
+export default class extends Controller {
+   @Value urlValue: string;
+   @Value methodValue: string = 'GET';
+
+   connect() {
+      fetch(this.urlValue, { method: this.methodValue }).then(/* … */);
+   }
 }
 ```
 

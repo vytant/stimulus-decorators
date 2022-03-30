@@ -31,6 +31,7 @@
     "prettier": "2.6.1"
   },
   "dependencies": {
-    "@hotwired/stimulus": "^3.0.0"
+    "@hotwired/stimulus": "^3.0.0",
+    "reflect-metadata": "^0.1.13"
   }
 }
