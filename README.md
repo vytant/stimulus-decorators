@@ -13,6 +13,7 @@ There are several decorators:
 
 - [`@Target`](#target_decorator)
 - [`@Targets`](#targets_decorator)
+- [`@Value`](#value_decorator)
 - [`@TypedController`](#typed_controller_decorator)
 
 ### <a name="target_decorator"></a> `@Target` decorator
@@ -88,9 +89,45 @@ export default class extends Controller {
 }
 ```
 
+### <a name="value_decorator"></a> `@Value` decorator
+
+Explicitly define value properties with types and default values using the `@Value` decorator, and it will automatically add them to the `static values` object for your Stimulus controller.
+
+```ts
+// loader_controller.ts
+import { Controller } from '@hotwired/stimulus';
+import { Value, TypedController } from '@vytant/stimulus-decorators';
+
+@TypedController
+export default class extends Controller {
+  @Value(String) urlValue: string;
+
+  connect() {
+    fetch(this.urlValue).then(/* … */);
+  }
+}
+```
+
+Equivalent to:
+
+```js
+// loader_controller.js
+import { Controller } from '@hotwired/stimulus';
+
+export default class extends Controller {
+  static values = {
+    url: String,
+  };
+
+  connect() {
+    fetch(this.urlValue).then(/* … */);
+  }
+}
+```
+
 ### <a name="typed_controller_decorator"></a> `@TypedController` decorator
 
-It is required to use the `@TypedController` decorator on every Stimulus controller where you use `@Target`, or `@Targets` decorators.
+It is required to use the `@TypedController` decorator on every Stimulus controller where you use `@Target`, `@Targets`, or `@Value` decorators.
 
 ```ts
 // controller.ts

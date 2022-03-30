@@ -1,5 +1,5 @@
 import { Constructor } from '../types/contructor';
-import { getUniqueArrayValues } from './array';
+import { getUniqueArrayValues } from './array-values';
 
 export function readInheritableStaticArrayValues<T>(constructor: Constructor<T>, propertyKey: string) {
   const ancestors = getAncestorsForConstructor(constructor);
@@ -9,6 +9,18 @@ export function readInheritableStaticArrayValues<T>(constructor: Constructor<T>,
       values.push(...getOwnStaticArrayValues(constructor, propertyKey));
 
       return values;
+    }, [] as string[]),
+  );
+}
+
+export function readInheritableStaticObjectKeys<T>(constructor: Constructor<T>, propertyKey: string) {
+  const ancestors = getAncestorsForConstructor(constructor);
+
+  return getUniqueArrayValues(
+    ancestors.reduce((keys, constructor) => {
+      keys.push(...getOwnStaticObjectKeys(constructor, propertyKey));
+
+      return keys;
     }, [] as string[]),
   );
 }
@@ -28,4 +40,10 @@ function getOwnStaticArrayValues<T>(constructor: Constructor<T>, propertyKey: st
   const definition = constructor[propertyKey as keyof typeof constructor];
 
   return Array.isArray(definition) ? definition : [];
+}
+
+function getOwnStaticObjectKeys<T>(constructor: Constructor<T>, propertyKey: string) {
+  const definition = constructor[propertyKey as keyof typeof constructor];
+
+  return definition ? Object.keys(definition) : [];
 }

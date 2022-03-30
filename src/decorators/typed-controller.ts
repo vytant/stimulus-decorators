@@ -1,8 +1,8 @@
 import { Controller as StimulusController } from '@hotwired/stimulus';
 import { Constructor } from '../types/contructor';
-import { readInheritableStaticArrayValues } from '../utilities/inheritable-statics';
-import { deleteOwnProperty } from '../utilities/object';
-import { TARGET_PROPERTY_SUFFIX, TARGETS_PROPERTY_SUFFIX } from '../constants/property-suffixes';
+import { readInheritableStaticArrayValues, readInheritableStaticObjectKeys } from '../utilities/inheritable-statics';
+import { deleteOwnProperty } from '../utilities/object-properties';
+import { TARGET_PROPERTY_SUFFIX, TARGETS_PROPERTY_SUFFIX, VALUE_PROPERTY_SUFFIX } from '../constants/property-suffixes';
 
 export function TypedController<T extends Constructor<StimulusController>>(BaseController: T) {
   return class extends BaseController {
@@ -16,6 +16,10 @@ export function TypedController<T extends Constructor<StimulusController>>(BaseC
       readInheritableStaticArrayValues(constructor, 'targets').forEach(name => {
         deleteOwnProperty(this, `${name}${TARGET_PROPERTY_SUFFIX}`);
         deleteOwnProperty(this, `${name}${TARGETS_PROPERTY_SUFFIX}`);
+      });
+
+      readInheritableStaticObjectKeys(constructor, 'values').forEach(name => {
+        deleteOwnProperty(this, `${name}${VALUE_PROPERTY_SUFFIX}`);
       });
     }
   };
