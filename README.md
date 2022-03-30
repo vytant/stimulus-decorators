@@ -148,7 +148,7 @@ export default class extends Controller {
 
 ```ts
 // loader_controller.ts
-import 'reflect-metadata;
+import 'reflect-metadata';
 import { Controller } from '@hotwired/stimulus'
 import { Value, TypedController } from '@vytant/stimulus-decorators';
 
