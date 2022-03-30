@@ -114,7 +114,7 @@ import { Value, TypedController } from '@vytant/stimulus-decorators';
 
 @TypedController
 export default class extends Controller {
-  @Value(String) urlValue: string;
+  @Value(String) urlValue!: string;
   @Value(String) methodValue: string = 'GET';
 
   connect() {
@@ -154,7 +154,7 @@ import { Value, TypedController } from '@vytant/stimulus-decorators';
 
 @TypedController
 export default class extends Controller {
-   @Value urlValue: string;
+   @Value urlValue!: string;
    @Value methodValue: string = 'GET';
 
    connect() {
