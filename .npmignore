@@ -1,23 +1,33 @@
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+
 # Logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Compiled output
-dist/
+# Source
+src/
 
-# Dependency directories
-node_modules/
-
-# TypeScript cache
+# TypeScript
+tsconfig.json
 *.tsbuildinfo
 
 # Optional npm cache directory
 .npm
 
-# Optional eslint cache
+# eslint
+.eslintrc
+.eslintignore
 .eslintcache
+
+# prettier
+.prettierrc
+.prettierignore
 
 # Microbundle cache
 .rpt2_cache/
@@ -25,5 +35,9 @@ node_modules/
 .rts2_cache_es/
 .rts2_cache_umd/
 
-# Yarn Integrity file
+# Yarn
+.yarn.lock
 .yarn-integrity
+
+# release-it
+.release-it.json

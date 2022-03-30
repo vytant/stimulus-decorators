@@ -7,6 +7,20 @@ Stimulus Decorators is a TypeScript library that extends the [Stimulus](https://
 - Stimulus 3
 - TypeScript
 
+## Installation
+
+If you use Yarn package manager.
+
+```bash
+yarn add @vytant/stimulus-decorators
+```
+
+If you use npm package manager.
+
+```bash
+npm install --save @vytant/stimulus-decorators
+```
+
 ## Usage
 
 There are several decorators:

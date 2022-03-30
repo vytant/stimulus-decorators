@@ -1,0 +1,8 @@
+{
+  "hooks": {
+    "before:init": ["yarn lint", "yarn build"]
+  },
+  "github": {
+    "release": true
+  }
+}
