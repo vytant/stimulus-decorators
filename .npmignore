@@ -13,8 +13,15 @@ yarn-error.log*
 # Source
 src/
 
+# Tests
+coverage/
+jest.config.js
+jest.setup.ts
+jest.utils.ts
+
 # TypeScript
 tsconfig.json
+tsconfig.test.json
 *.tsbuildinfo
 
 # Optional npm cache directory

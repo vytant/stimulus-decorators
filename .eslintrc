@@ -10,7 +10,21 @@
   ],
   "overrides": [
     {
-      "files": ["*.ts"]
+      "files": ["*.ts"],
+      "rules": {
+        "@typescript-eslint/no-non-null-assertion": 0
+      }
+    },
+    {
+      "files": ["*.test.ts", "*.spec.ts"],
+      "rules": {
+        "@typescript-eslint/no-inferrable-types": [
+          2,
+          {
+            "ignoreProperties": true
+          }
+        ]
+      }
     }
   ]
 }

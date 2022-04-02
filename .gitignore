@@ -10,6 +10,9 @@ dist/
 # Dependency directories
 node_modules/
 
+# Tests
+coverage/
+
 # TypeScript cache
 *.tsbuildinfo
 
