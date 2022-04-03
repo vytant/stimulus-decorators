@@ -8,6 +8,106 @@ import { Value } from './value';
 import { startApplication } from '../../jest.utils';
 
 describe('@TypedController', () => {
+  describe('@Class', () => {
+    it('should delete `@Class` decorated properties and access Stimulus getters', async () => {
+      @TypedController
+      class TestController extends Controller {
+        @Class firstClass!: string;
+        @Class secondClass!: string;
+      }
+
+      const { test: testController } = await startApplication(
+        { test: TestController },
+        '<div data-controller="test" data-test-first-class="first" data-test-second-class="second"></div>',
+      );
+
+      expect(Object.prototype.hasOwnProperty.call(testController, 'firstClass')).toBe(false);
+      expect(Object.prototype.hasOwnProperty.call(testController, 'secondClass')).toBe(false);
+      expect(testController.firstClass).toBe('first');
+      expect(testController.secondClass).toBe('second');
+    });
+
+    it('should delete `@Class` decorated properties and access Stimulus getters of parent and child controllers separately', async () => {
+      @TypedController
+      class ParentController extends Controller {
+        @Class firstClass!: string;
+      }
+
+      @TypedController
+      class ChildController extends ParentController {
+        @Class secondClass!: string;
+      }
+
+      const { parent: parentController, child: childController } = await startApplication(
+        { parent: ParentController, child: ChildController },
+        `
+          <div data-controller="parent" data-parent-first-class="first" data-parent-second-class="second"></div>
+          <div data-controller="child" data-child-first-class="first" data-child-second-class="second"></div>
+        `,
+      );
+
+      expect(Object.prototype.hasOwnProperty.call(parentController, 'firstClass')).toBe(false);
+      expect(Object.prototype.hasOwnProperty.call(parentController, 'secondClass')).toBe(false);
+      expect(parentController.firstClass).toBe('first');
+      expect((parentController as ChildController).secondClass).toBeUndefined();
+
+      expect(Object.prototype.hasOwnProperty.call(childController, 'firstClass')).toBe(false);
+      expect(Object.prototype.hasOwnProperty.call(childController, 'secondClass')).toBe(false);
+      expect(childController.firstClass).toBe('first');
+      expect(childController.secondClass).toBe('second');
+    });
+  });
+
+  describe('@Classes', () => {
+    it('should delete `@Classes` decorated properties and access Stimulus getters', async () => {
+      @TypedController
+      class TestController extends Controller {
+        @Classes firstClasses!: string[];
+        @Classes secondClasses!: string[];
+      }
+
+      const { test: testController } = await startApplication(
+        { test: TestController },
+        '<div data-controller="test" data-test-first-class="first" data-test-second-class="second"></div>',
+      );
+
+      expect(Object.prototype.hasOwnProperty.call(testController, 'firstClasses')).toBe(false);
+      expect(Object.prototype.hasOwnProperty.call(testController, 'secondClasses')).toBe(false);
+      expect(testController.firstClasses).toBeInstanceOf(Array);
+      expect(testController.secondClasses).toBeInstanceOf(Array);
+    });
+
+    it('should delete `@Classes` decorated properties and access Stimulus getters of parent and child controllers separately', async () => {
+      @TypedController
+      class ParentController extends Controller {
+        @Classes firstClasses!: string[];
+      }
+
+      @TypedController
+      class ChildController extends ParentController {
+        @Classes secondClasses!: string[];
+      }
+
+      const { parent: parentController, child: childController } = await startApplication(
+        { parent: ParentController, child: ChildController },
+        `
+          <div data-controller="parent" data-parent-first-class="parent-first" data-parent-second-class="parent-second"></div>
+          <div data-controller="child" data-child-first-class="child-first" data-child-second-class="child-second"></div>
+        `,
+      );
+
+      expect(Object.prototype.hasOwnProperty.call(parentController, 'firstTarget')).toBe(false);
+      expect(Object.prototype.hasOwnProperty.call(parentController, 'secondTarget')).toBe(false);
+      expect(parentController.firstClasses).toStrictEqual(['parent-first']);
+      expect((parentController as ChildController).secondClasses).toBeUndefined();
+
+      expect(Object.prototype.hasOwnProperty.call(childController, 'firstTarget')).toBe(false);
+      expect(Object.prototype.hasOwnProperty.call(childController, 'secondTarget')).toBe(false);
+      expect(childController.firstClasses).toStrictEqual(['child-first']);
+      expect(childController.secondClasses).toStrictEqual(['child-second']);
+    });
+  });
+
   describe('@Target', () => {
     it('should delete `@Target` decorated properties and access Stimulus getters', async () => {
       @TypedController

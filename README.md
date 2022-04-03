@@ -28,6 +28,8 @@ There are several decorators:
 - [`@Target`](#target_decorator)
 - [`@Targets`](#targets_decorator)
 - [`@Value`](#value_decorator)
+- [`@Class`](#class_decorator)
+- [`@Classes`](#classes_decorator)
 - [`@TypedController`](#typed_controller_decorator)
 
 ### <a name="target_decorator"></a> `@Target` decorator
@@ -149,17 +151,93 @@ export default class extends Controller {
 ```ts
 // loader_controller.ts
 import 'reflect-metadata';
-import { Controller } from '@hotwired/stimulus'
+import { Controller } from '@hotwired/stimulus';
 import { Value, TypedController } from '@vytant/stimulus-decorators';
 
 @TypedController
 export default class extends Controller {
-   @Value urlValue!: string;
-   @Value methodValue: string = 'GET';
+  @Value urlValue!: string;
+  @Value methodValue: string = 'GET';
 
-   connect() {
-      fetch(this.urlValue, { method: this.methodValue }).then(/* … */);
-   }
+  connect() {
+    fetch(this.urlValue, { method: this.methodValue }).then(/* … */);
+  }
+}
+```
+
+### <a name="class_decorator"></a> `@Class` decorator
+
+Explicitly define CSS class properties with types using the `@Class` decorator, and it will automatically add them to the `static classes` array for your Stimulus controller.
+
+```ts
+// search_controller.ts
+import { Controller } from '@hotwired/stimulus';
+import { Class, TypedController } from '@vytant/stimulus-decorators';
+
+@TypedController
+export default class extends Controller {
+  @Class loadingClass!: string;
+
+  loadResults() {
+    this.element.classList.add(this.loadingClass);
+
+    fetch(/* … */);
+  }
+}
+```
+
+Equivalent to:
+
+```js
+// search_controller.js
+import { Controller } from '@hotwired/stimulus';
+
+export default class extends Controller {
+  static classes = ['loading'];
+
+  loadResults() {
+    this.element.classList.add(this.loadingClass);
+
+    fetch(/* … */);
+  }
+}
+```
+
+### <a name="Classes_decorator"></a> `@Classes` decorator
+
+To get an array of classes in the corresponding CSS class attribute, use the `@Classes` decorator.
+
+```ts
+// search_controller.ts
+import { Controller } from '@hotwired/stimulus';
+import { Classes, TypedController } from '@vytant/stimulus-decorators';
+
+@TypedController
+export default class extends Controller {
+  @Classes loadingClasses!: string[];
+
+  loadResults() {
+    this.element.classList.add(...this.loadingClasses);
+
+    fetch(/* … */);
+  }
+}
+```
+
+Equivalent to:
+
+```js
+// search_controller.js
+import { Controller } from '@hotwired/stimulus';
+
+export default class extends Controller {
+  static classes = ['loading'];
+
+  loadResults() {
+    this.element.classList.add(...this.loadingClasses);
+
+    fetch(/* … */);
+  }
 }
 ```
 
